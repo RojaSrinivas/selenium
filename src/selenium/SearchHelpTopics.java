@@ -1,17 +1,28 @@
+
 package selenium;
 
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 
-public class WdTestScript {
-
-	public static void main(String[] args) throws InterruptedException {
-
-		WebDriver driver = new FirefoxDriver();
+public class SearchHelpTopics {
+	WebDriver driver;
+	@BeforeMethod
+	public void setup(){
+		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		
+	}
+    @Test
+	public void searchHelpTopicsTest() {
+
+		
+		
 		driver.get("https://www.google.com");
 		driver.findElement(By.id("lst-ib")).clear();
 		driver.findElement(By.id("lst-ib")).sendKeys("google");
@@ -24,10 +35,16 @@ public class WdTestScript {
 		driver.findElement(By.cssSelector("article>nav[data-tracking-cat='accordion-homepage']>section:last-child")).click();
 		String str1 = driver.findElement(By.xpath("//article/nav[@class='accordion-homepage']/section[h2[text()='Popular articles']]/div/div")).getAttribute("style");
 		System.out.println("the style attribute has a value of" + str1 + "-after");
-		Thread.sleep(3000);
-		driver.quit();
+		
+		
 		
 
 	}
+    @AfterMethod
+    public void tearDown(){
+    	driver.quit();
+    	
+    }
+    
 
 }
